@@ -1,0 +1,7 @@
+db.sqlite3
+steps.txt
+*.pyc
+medical_reminder/__pycache__/*
+medical_reminder/migrations/__pycache__/*
+project/__pycache__/*
+.DS_Store
