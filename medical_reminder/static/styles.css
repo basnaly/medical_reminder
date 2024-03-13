@@ -4,3 +4,8 @@ html {
     --bright-blue: #00ABE4;
     --white: #FFFFFFFF.
 }
+
+.btn {
+    --bs-btn-bg: var(--bright-blue);
+    color: white;
+}
