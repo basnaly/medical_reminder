@@ -5,7 +5,41 @@ html {
     --white: #FFFFFFFF.
 }
 
+body {
+    background-color: var(--blue);
+}
+
+nav {
+    background-color: white;
+    --bs-link-color: #00ABE4;
+}
+
+.nav-pills {
+    --bs-nav-pills-link-active-bg: #00ABE4;
+}
+
+.nav {
+    --bs-nav-link-hover-color: black;
+}
+
+.form-control {
+    --bs-body-bg: #E9F1FA;
+}
+
+.med-form {
+    background-color: white;
+}
+
 .btn {
     --bs-btn-bg: var(--bright-blue);
     color: white;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-color-type: var(--bs-table-striped-color);
+    --bs-table-bg-type: #E9F1FA;
+}
+
+.table-group-divider {
+    border-top-color: #00ABE4;
 }

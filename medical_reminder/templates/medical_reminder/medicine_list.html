@@ -1,0 +1,39 @@
+{% extends "medical_reminder/layout.html" %}
+
+{% block body %}
+
+    <div class="med-form d-flex flex-column align-items-center shadow p-4 pb-2 mx-3 mt-4 w-75">
+        {% if list_medicines %}
+            
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Form</th>
+                        <th scope="col">Strength</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Frequency</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for medicine in list_medicines %}
+                        <tr>
+                            <td>{{ medicine.medicine_name }}</td>
+                            <td>{{ medicine.medicine_form }}</td>
+                            <td>{{ medicine.medicine_strength }}</td>
+                            <td>{{ medicine.medicine_unit }}</td>
+                            <td>{{ medicine.medicine_frequency }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        {% else %}
+            <div>
+                You medicine list is empty! 
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

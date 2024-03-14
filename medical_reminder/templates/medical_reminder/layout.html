@@ -12,40 +12,41 @@
         <link href="{% static 'styles.css' %}" rel="stylesheet">
     </head>
 
-    <body class="d-flex flex-column vh-100">
-        
-        {% comment %} <div> {% endcomment %}
-            <nav class="nav nav-pills flex-column flex-sm-row">
+    <body class="d-flex flex-column vh-100 overflow-auto">
+       
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <div class="">
+                <a class="flex-sm-fill text-sm-center nav-link fs-5 fw-bold" 
+                    href="/">
+                    MedicalReminder
+                </a>
+            </div>
+            <div class="d-flex justify-content-between flex-grow-1">
                 <div>
-                    <a class="flex-sm-fill text-sm-center nav-link fs-5 fw-bold" 
-                        href="/">
-                        MedicalReminder
+                    <a class="nav_bar flex-sm-fill text-sm-center nav-link {% if request.path == '/create_medicine' %} active {% endif %}" 
+                        href="{% url 'create_medicine' %}">
+                        Create New Medicine
                     </a>
                 </div>
-                <div class="d-flex justify-content-between flex-grow-1">
-                    <div>
-                        <a class="flex-sm-fill text-sm-center nav-link {% if request.path == '/create_medicine' %} active {% endif %}" 
-                            href="{% url 'create_medicine' %}">
-                            Create Medicine
-                        </a>
-                    </div>
-                    <div>
-                        <a class="flex-sm-fill text-sm-center nav-link" 
-                            href="#">
-                            Medicine List
-                        </a>
-                    </div>
-                    <div>
-                        <a class="flex-sm-fill text-sm-center nav-link" href="#">Appoinments</a>
-                    </div>
-                    <div>
-                        <a class="flex-sm-fill text-sm-center nav-link" href="#">Aaa</a>
-                    </div>
+                <div>
+                    <a class="flex-sm-fill text-sm-center nav-link {% if request.path == '/medicine_list' %} active {% endif %}" 
+                        href="{% url 'medicine_list' %}">
+                        My Medicine List
+                    </a>
                 </div>
-            </nav>
+                <div>
+                    <a class="flex-sm-fill text-sm-center nav-link" href="#">My Appoinments</a>
+                </div>
+                <div>
+                    <a class="flex-sm-fill text-sm-center nav-link" href="#">Aaa</a>
+                </div>
+            </div>
+        </nav>
 
-        {% comment %} </div> {% endcomment %}
-        {% block body %}
-        {% endblock %}
+        <div class="middle d-flex flex-column align-items-center overflow-auto">
+            {% block body %}
+            {% endblock %}
+        </div>
+
     </body>
 </html>

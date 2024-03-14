@@ -10,11 +10,11 @@ class User(AbstractUser):
         return f'{self.username}, {self.first_name}, {self.last_name}, {self.email}'
     
 class Medicine(models.Model):
-    name = models.CharField(max_length=120)
-    form = models.CharField(max_length=60)
-    strength = models.FloatField(blank=True, null=True)
-    unit = models.CharField(max_length=20, blank=True, null=True)
-    frequency = models.IntegerField(blank=True, null=True)
+    medicine_name = models.CharField(max_length=120)
+    medicine_form = models.CharField(max_length=60)
+    medicine_strength = models.FloatField(blank=True, null=True)
+    medicine_unit = models.CharField(max_length=20, blank=True, null=True)
+    medicine_frequency = models.IntegerField(blank=True, null=True)
     
     def __str__(self):
-        return f'{self.name}, {self.form}, {self.strength}, {self.unit}, {self.frequency}'
+        return f'{self.medicine_name}, {self.medicine_form}, {self.medicine_strength}, {self.medicine_unit}, {self.medicine_frequency}'
