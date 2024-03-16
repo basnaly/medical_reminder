@@ -5,6 +5,8 @@ from medical_reminder.forms import MedicineForm
 from medical_reminder.constants import FORM, UNIT
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
+from django.db import IntegrityError
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -68,4 +70,26 @@ def medicine_list(request):
     list_medicines = Medicine.objects.filter()
     return render(request, "medical_reminder/medicine_list.html", {
         "list_medicines": list_medicines
+    })
+    
+ 
+@csrf_exempt   
+def delete_medicine(request, name):
+    
+    try:
+        medicine = Medicine.objects.get(id=name)
+    except Medicine.DoesNotExist:
+        return JsonResponse({
+            'message': 'The medicine doen\'t exist!'
+        })
+        
+    if request.method == 'DELETE':
+        try:
+            medicine.delete()
+        except IntegrityError:
+            return JsonResponse({
+                'message': 'Something went wrong. Try again later.'
+            })
+    return JsonResponse({
+        'message': f'Your medicine {medicine.medicine_name} was successfully deleted!'
     })

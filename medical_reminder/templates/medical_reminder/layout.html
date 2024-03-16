@@ -43,7 +43,23 @@
             </div>
         </nav>
 
-        <div class="middle d-flex flex-column align-items-center overflow-auto">
+        <div class="middle d-flex flex-column align-items-center overflow-auto" id="display-items">
+            {% if messages %}
+
+                {% block script %}
+                    <script src="{% static '/message.js' %}"></script>
+                {% endblock %}
+
+                <div id="message">
+                    {% for message in messages %}
+                        <div class="alert shadow {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% endif%}
+
             {% block body %}
             {% endblock %}
         </div>
