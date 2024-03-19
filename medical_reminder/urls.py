@@ -9,4 +9,5 @@ urlpatterns = [
     path('medicine_list', views.medicine_list, name='medicine_list'),
     
     path('delete_medicine/<str:name>', views.delete_medicine, name='delete_medicine'),
+    path('edit_medicine/<str:name>', views.edit_medicine, name='edit_medicine'),
 ]

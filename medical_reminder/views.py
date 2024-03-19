@@ -5,6 +5,7 @@ from medical_reminder.forms import MedicineForm
 from medical_reminder.constants import FORM, UNIT
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
+import json
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 
@@ -53,7 +54,6 @@ def create_medicine(request):
                     "list_medicines": list_medicines
                 })
             messages.success(request, f"You added {medicine_name} in your medicine list")
-            # return HttpResponseRedirect("medicine_list")
             return render(request, "medical_reminder/medicine_list.html", {
                 "list_medicines": list_medicines
             })
@@ -92,4 +92,35 @@ def delete_medicine(request, name):
             })
     return JsonResponse({
         'message': f'Your medicine {medicine.medicine_name} was successfully deleted!'
+    })
+
+
+@csrf_exempt 
+def edit_medicine(request, name):
+
+    medicine = Medicine.objects.get(id=name)
+    data = json.loads(request.body)
+    changed_medicine_name = data.get('changed_medicine_name')
+    changed_medicine_form = data.get('changed_medicine_form')
+    changed_medicine_strength = data.get('changed_medicine_strength')
+    changed_medicine_unit = data.get('changed_medicine_unit')
+    changed_medicine_frequency = data.get('changed_medicine_frequency')
+    if not changed_medicine_name or not changed_medicine_form:
+        return JsonResponse({
+            'message': 'The input fields name and form cannot be empty!'
+        })
+    
+    try:
+        medicine.medicine_name = changed_medicine_name
+        medicine.medicine_form = changed_medicine_form
+        medicine.medicine_strength = changed_medicine_strength
+        medicine.medicine_unit = changed_medicine_unit
+        medicine.medicine_frequency = changed_medicine_frequency
+        medicine.save()
+    except IntegrityError:
+        return JsonResponse({
+            'message': 'Something went wrong. Try again later.'
+        })
+    return JsonResponse({
+        'message': f'Your { medicine.medicine_name } medicine was successfully updated!'
     })

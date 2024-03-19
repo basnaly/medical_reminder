@@ -52,7 +52,7 @@
 
                 <div id="message">
                     {% for message in messages %}
-                        <div class="alert shadow {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                        <div class="alert mt-4 shadow {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
                             {{ message }}
                         </div>
                     {% endfor %}

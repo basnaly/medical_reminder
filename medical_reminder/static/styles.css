@@ -33,6 +33,15 @@ nav {
 .btn {
     --bs-btn-bg: var(--bright-blue);
     color: white;
+    --bs-btn-hover-color: #00ABE4;
+    --bs-btn-hover-bg: #E9F1FA;
+}
+
+.btn-delete {
+    --bs-btn-bg: red;
+    color: white;
+    --bs-btn-hover-color: red;
+    --bs-btn-hover-bg: #E9F1FA;
 }
 
 .table-striped>tbody>tr:nth-of-type(odd)>* {
