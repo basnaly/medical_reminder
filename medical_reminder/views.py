@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django import forms
-from .models import Medicine
-from medical_reminder.forms import MedicineForm
+from .models import Medicine, Appointment
+from medical_reminder.forms import MedicineForm, AppointmentForm
 from medical_reminder.constants import FORM, UNIT
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
@@ -124,3 +124,52 @@ def edit_medicine(request, name):
     return JsonResponse({
         'message': f'Your { medicine.medicine_name } medicine was successfully updated!'
     })
+    
+    
+def create_appointment(request):
+    
+    appointment_list = Appointment.objects.filter()
+    if request.method == "GET":
+        form = AppointmentForm()
+        
+        return render(request, "medical_reminder/appointment.html", {
+            "form": form,
+            "appointment_list": appointment_list
+        })
+        
+    else:
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            doctor_name = form.cleaned_data["doctor_name"]
+            date_visit = form.cleaned_data["date_visit"]
+            time_visit = form.cleaned_data["time_visit"]
+            place_visit = form.cleaned_data["place_visit"]
+            notes = form.cleaned_data["notes"]
+            try:
+                new_appointment = Appointment.objects.create(
+                    doctor_name = doctor_name,
+                    date_visit = date_visit,
+                    time_visit = time_visit,
+                    place_visit = place_visit,
+                    notes = notes
+                )
+                new_appointment.save()
+            except:
+                messages.error(request, "Something went wrong. Try again later.")
+                return render(request, "medical_reminder/appointment.html", {
+                    form: form,
+                    "appointment_list": appointment_list
+                })
+            messages.success(request, f"You added visit to D-r {doctor_name} to your appointment list!")
+            return render(request, "medical_reminder/appointment.html", {
+                "appointment_list": appointment_list
+            })
+        else:
+            messages.error(request, "The form is not valid!")
+            return render(request, "medical_reminder/appointment.html", {
+                    form: form,
+                    "appointment_list": appointment_list
+                })
+            
+            
+            

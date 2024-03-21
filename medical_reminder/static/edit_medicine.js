@@ -149,14 +149,14 @@ function displayEditMedicine(medicine_id, medicine_name, medicine_form, medicine
     parentElement.appendChild(buttonsElement)
 
     const cancelButton = document.createElement('button');
-    cancelButton.className = 'btn cancel-button m-2';
+    cancelButton.className = 'btn btn-delete m-2';
     cancelButton.type = 'button';
     cancelButton.innerHTML = 'Cancel'
     buttonsElement.append(cancelButton);
     cancelButton.addEventListener('click', () => cancelEditMedicine());
 
     const saveButton = document.createElement('button');
-    saveButton.className = 'btn save-button m-2';
+    saveButton.className = 'btn m-2';
     saveButton.type = 'button';
     saveButton.innerHTML = 'Save'
     buttonsElement.append(saveButton);
