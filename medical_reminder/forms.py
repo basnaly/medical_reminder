@@ -13,6 +13,6 @@ class AppointmentForm(forms.Form):
     date_visit = forms.DateField(widget=forms.DateInput(attrs={'placeholder': 'Visit Date', 'type': 'date', 'class': 'form-control mb-3'}), label='')
     time_visit = forms.TimeField(widget=forms.TimeInput(attrs={'placeholder': 'Visit Time', 'type': 'time', 'class': 'form-control mb-3'}), label='')
     place_visit = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Visit Place', 'class': 'form-control mb-3'}), label='')
-    notes = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Notes', 'class': 'form-control'}), label='')
+    notes = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Notes', 'class': 'form-control'}), required=False, label='')
     
     

@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 import json
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 
 
 def index(request):
@@ -130,10 +131,8 @@ def create_appointment(request):
     
     appointment_list = Appointment.objects.filter()
     if request.method == "GET":
-        form = AppointmentForm()
-        
         return render(request, "medical_reminder/appointment.html", {
-            "form": form,
+            "form": AppointmentForm(),
             "appointment_list": appointment_list
         })
         
@@ -154,14 +153,17 @@ def create_appointment(request):
                     notes = notes
                 )
                 new_appointment.save()
-            except:
+            except IntegrityError:
                 messages.error(request, "Something went wrong. Try again later.")
                 return render(request, "medical_reminder/appointment.html", {
                     form: form,
                     "appointment_list": appointment_list
                 })
-            messages.success(request, f"You added visit to D-r {doctor_name} to your appointment list!")
+            messages.success(request, f"You added visit to {doctor_name} to your appointment list!")
+            # return HttpResponseRedirect(reverse("create_appointment"))
+        
             return render(request, "medical_reminder/appointment.html", {
+                form: form,
                 "appointment_list": appointment_list
             })
         else:
