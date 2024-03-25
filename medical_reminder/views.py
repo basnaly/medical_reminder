@@ -160,12 +160,13 @@ def create_appointment(request):
                     "appointment_list": appointment_list
                 })
             messages.success(request, f"You added visit to {doctor_name} to your appointment list!")
-            # return HttpResponseRedirect(reverse("create_appointment"))
+            # redirect to get
+            return HttpResponseRedirect(reverse("create_appointment"))
         
-            return render(request, "medical_reminder/appointment.html", {
-                form: form,
-                "appointment_list": appointment_list
-            })
+            # return render(request, "medical_reminder/appointment.html", {
+            #     form: AppointmentForm(),
+            #     "appointment_list": appointment_list
+            # })
         else:
             messages.error(request, "The form is not valid!")
             return render(request, "medical_reminder/appointment.html", {
@@ -173,5 +174,23 @@ def create_appointment(request):
                     "appointment_list": appointment_list
                 })
             
-            
-            
+
+@csrf_exempt            
+def delete_appointment(request, name):
+    try:
+        appointment = Appointment.objects.get(id=name)
+    except Appointment.DoesNotExist:
+        return JsonResponse({
+            'message': 'The appointment doen\'t exist!'
+        })
+        
+    if request.method == 'DELETE':
+        try:
+            appointment.delete()
+        except IntegrityError:
+            return JsonResponse({
+                'message': 'Something went wrong. Try again later.'
+            })
+    return JsonResponse({
+        'message': f'Your appointment to {appointment.doctor_name} was successfully deleted!'
+    })

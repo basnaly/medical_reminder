@@ -1,6 +1,11 @@
 {% extends "medical_reminder/layout.html" %}
+{% load static %}
 
 {% block body %}
+
+    {% block script %}
+        <script src="{% static '/edit_appointment.js' %}"></script>
+    {% endblock %}
 
     <div class="container d-flex justify-content-evenly align-items-start">
 
@@ -48,8 +53,8 @@
                                         <td class="">{{ appointment.notes }}</td>
                                         <td>
                                             <div>
-                                                <button type="button" id="edit-medicine-{{ medicine.id }}" class="btn-sm" style="border: none"
-                                                    onClick="displayEditMedicine('{{ medicine.id }}', '{{ medicine.medicine_name }}', '{{ medicine.medicine_form }}', '{{ medicine.medicine_strength }}', '{{ medicine.medicine_unit }}', '{{ medicine.medicine_frequency }}')">
+                                                <button type="button" id="edit-appointment-{{ appointment.id }}" class="btn-sm" style="border: none"
+                                                    onClick="displayEditAppointment('{{ appointment.id }}', '{{ appointment.doctor_name }}', '{{ appointment.date_visit }}', '{{ appointment.time_visit }}', '{{ appointment.place_visit }}', '{{ appointment.notes }}')">
         
                                                     <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
                                                         <g id="SVGRepo_bgCarrier" stroke-width="0">
@@ -60,7 +65,7 @@
                                                 </button>
         
                                                 <button type="button" id="delete-button" class="btn-sm" style="border: none"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteModal-{{ medicine.id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#deleteAppointment-{{ appointment.id }}">
         
                                                     <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg" stroke="#ff0000">
                                                         <g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.016" fill="#ffffff" strokewidth="0"></rect></g>
@@ -75,21 +80,22 @@
                                             </div>
                                         </td>
 
-                                        <div class="modal fade" id="deleteModal-{{ medicine.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        {% comment %} button's data-bs-target == modal's id="deleteAppointment-{{ appointment.id }} {% endcomment %}
+                                        <div class="modal fade" id="deleteAppointment-{{ appointment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete shop</h1>
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete appointment</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                    <div>Are you sure you want to delete
-                                                            <span class="fs-5 fw-bold ms-1" style="color: #00ABE4">{{ medicine.medicine_name }}</span> medicine?
+                                                    <div>Are you sure you want to delete appointment to 
+                                                            <span class="fs-5 fw-bold ms-1" style="color: #00ABE4">{{ appointment.doctor_name }}</span>?
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-delete" data-bs-dismiss="modal" onClick="deleteMedicine('{{ medicine.id }}'); return false;" id="delete-item">
+                                                        <button type="button" class="btn btn-delete" data-bs-dismiss="modal" onClick="deleteAppointment('{{ appointment.id }}'); return false;" id="delete-item">
                                                             Delete
                                                         </button>
                                                     </div>

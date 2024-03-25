@@ -1,10 +1,6 @@
-const FORM = ['Capsule', 'Tablet', 'Liquid', 'Injection', 'Drops', 'Ointment', 'Patch', 'Spray']
 
-const UNIT = ['mg', 'mcg', 'g', 'ml', '%']
-
-
-function deleteMedicine(medicine_id) {
-    fetch(`/delete_medicine/${medicine_id}`, {
+function deleteAppointment(appointment_id) {
+    fetch(`/delete_appointment/${appointment_id}`, {
         method: "DELETE"
     })
     .then(response => response.json())
@@ -18,6 +14,7 @@ function deleteMedicine(medicine_id) {
 
         setTimeout(() => {
             document.querySelector('#message').innerHTML = "";
+            // refresh page
             window.location.replace(window.location.href);
         }, 5000)  
     })
@@ -27,7 +24,7 @@ function deleteMedicine(medicine_id) {
 }
 
 
-function displayEditMedicine(medicine_id, medicine_name, medicine_form, medicine_strength, medicine_unit, medicine_frequency) {
+function displayEditAppointment(medicine_id, medicine_name, medicine_form, medicine_strength, medicine_unit, medicine_frequency) {
 
     const exsistingMedicine = document.getElementById('edit-medicine');
     if (exsistingMedicine) {
@@ -164,19 +161,19 @@ function displayEditMedicine(medicine_id, medicine_name, medicine_form, medicine
 }
 
 
-function editMedicine(medicine_id) {
+function editAppointment(appointment_id) {
 
-    const changed_medicine_name = document.getElementById('edit-medicine-name').value;
-    const changed_medicine_form = document.getElementById('edit-medicine-form').value;
-    const changed_medicine_strength = document.getElementById('edit-medicine-strength').value;
-    const changed_medicine_unit = document.getElementById('edit-medicine-unit').value;
-    const changed_medicine_frequency = document.getElementById('edit-medicine-frequency').value;
+    const changed_doctor_name = document.getElementById('edit-doctor_name').value;
+    const changed_date_visit = document.getElementById('edit-date_visit').value;
+    const changed_time_visit = document.getElementById('edit-time_visit').value;
+    const changed_place_visit = document.getElementById('edit-place_visit').value;
+    const changed_notes = document.getElementById('edit-notes').value;
 
-    fetch(`edit_medicine/${medicine_id}`, {
+    fetch(`edit_appointment/$appointment_id}`, {
         method: 'POST',
         body: JSON.stringify({
-            changed_medicine_name: changed_medicine_name,
-            changed_medicine_form: changed_medicine_form,
+            changed_doctor_name: changed_doctor_name,
+            changed_changed_date_visit: changed_changed_date_visit,
             changed_medicine_strength: changed_medicine_strength,
             changed_medicine_unit: changed_medicine_unit,
             changed_medicine_frequency: changed_medicine_frequency
