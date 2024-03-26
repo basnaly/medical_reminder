@@ -194,3 +194,35 @@ def delete_appointment(request, name):
     return JsonResponse({
         'message': f'Your appointment to {appointment.doctor_name} was successfully deleted!'
     })
+    
+    
+@csrf_exempt    
+def edit_appointment(request, name):
+    
+    appointment = Appointment.objects.get(id=name)
+    data = json.loads(request.body)
+    changed_doctor_name = data.get('changed_doctor_name')
+    changed_date_visit = data.get('changed_date_visit')
+    changed_time_visit = data.get('changed_time_visit')
+    changed_place_visit = data.get('changed_place_visit')
+    changed_notes = data.get('changed_notes')
+    if not changed_doctor_name or not changed_date_visit or not changed_time_visit or not changed_place_visit:
+        return JsonResponse({
+            'message': 'The input fields name, date, time and place visit cannot be empty!'
+        })
+    
+    try:
+        appointment.doctor_name = changed_doctor_name
+        appointment.date_visit = changed_date_visit
+        appointment.time_visit = changed_time_visit
+        appointment.place_visit = changed_place_visit
+        appointment.notes = changed_notes
+        appointment.save()
+    except IntegrityError:
+        return JsonResponse({
+            'message': 'Something went wrong. Try again later.'
+        })
+    return JsonResponse({
+        'message': f'Your visit to { appointment.doctor_name } was successfully updated!'
+    })
+    

@@ -29,8 +29,11 @@
         <div class="d-flex flex-column">
 
             <div id="currency-table" class="med-form d-flex flex-column align-items-center shadow p-4 pb-2 mx-3 mt-4">
+
                 {% if appointment_list %}
-                    <div class="fs-5">My Apointments</div>
+                    <div id="edit-appointment-table">
+
+                        <div class="fs-5 text-center mb-3">My Apointments</div>
                 
                         <table class="table table-striped text-center">
                             <thead>
@@ -48,7 +51,7 @@
                                     <tr>
                                         <td class="text-nowrap">{{ appointment.doctor_name }}</td>
                                         <td class="">{{ appointment.date_visit }}</td>
-                                        <td class="">{{ appointment.time_visit }}</td>
+                                        <td class="">{{ appointment.time_visit|time:'H:i' }}</td>
                                         <td class="">{{ appointment.place_visit }}</td>
                                         <td class="">{{ appointment.notes }}</td>
                                         <td>
